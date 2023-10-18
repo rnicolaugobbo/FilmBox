@@ -39,7 +39,17 @@ def add_movie_and_rating():
   add_comment(user_input_movie)
 
 def show_list():
-  print(movies_and_ratings)
+  if not movies_and_ratings:
+    print("Your movie list is empty!")
+    return
+  
+  print("Movies in your list:")
+  print("-" * 20)
+  for movie_name, details in movies_and_ratings.items():
+    print("Ttile:" + str(movie_name))
+    print("Rating:", "★" * int(details["rating"]))
+    print("Comment:", details.get("comment", "No comment provided."))
+    print("-" * 20)
 
 def clear_list():
   movies_and_ratings.clear()
@@ -83,6 +93,7 @@ def main_menu():
         for movie_name, details in movies_and_ratings.items():
           row_data = {"Film": movie_name, "Rating": details["rating"], "Comment": details["comment"]}
           doc_writer.writerow(row_data)
+          print("Exporing your list as a CSV file...")
     elif user_input == "5":
       print("Closing App...")
       exit()
