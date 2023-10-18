@@ -17,11 +17,7 @@ first_use = True
 is_active = True
 user_input_yes_no = ""
 user_input = ""
-user_name = ""
-add_movie = True
-show_list = True
-clear_list = True
-export = True
+user_name = input("Please type your name: ")
 
 def add_comment(movie_name):
   user_input_comment = input("Write a comment about the movie: ")
@@ -48,28 +44,28 @@ def show_list():
 def clear_list():
   movies_and_ratings.clear()
 
-while first_use:
-  user_name = input("Please type your name: ")
+def add_first_movie():
   user_input_yes_no = input("Hello {}! Do you want to add your first movie to the list? (\"yes\" or \"no\"): ".format(user_name))
   user_input_yes_no.lower()
   while user_input_yes_no not in ["yes", "no"]:
     user_input_yes_no = input("Please type \"yes or \"no\": ")
-  
   if user_input_yes_no == "no":
     print("Closing app...")
     exit()
   else:
-    first_use = False
+    add_movie_and_rating()
+    print("Movie added to your list!")
 
-while is_active:
-  add_movie_and_rating()
-  print("Movie added to your list!")
-
+def main_menu():
   while True:
-    user_input = \
-      input("Now that you have movie(s) in your list, you can: type \"1\" to see your list, type \"2\" to add another movie, type \"3\" to clear your list, \
-  type \"4\" to export your list as a CSV file or type \"5\" to leave the app")
-  
+    if not movies_and_ratings:
+      print("Your movie list is empty!")
+      add_first_movie()
+    else:
+      user_input = \
+              input("Now that you have movie(s) in your list, you can: type \"1\" to see your list, type \"2\" to add another movie, type \"3\" to clear your list, \
+  type \"4\" to export your list as a CSV file or type \"5\" to leave the app: ")
+    
     if user_input == "1":
       show_list()
     elif user_input == "2":
@@ -78,11 +74,18 @@ while is_active:
     elif user_input == "3":
       clear_list()
     elif user_input == "4":
-      ields = ["Film", "Rating", "Comment"]
+      fields = ["Film", "Rating", "Comment"]
 
       with open("films_rating_and_comments.csv", "w") as films_csv:
         doc_writer = csv.DictWriter(films_csv, fieldnames=fields)
         doc_writer.writeheader()
 
-        for item in movies_and_ratings:
-          doc_writer.writerow(item)
+        for movie_name, details in movies_and_ratings.items():
+          row_data = {"Film": movie_name, "Rating": details["rating"], "Comment": details["comment"]}
+          doc_writer.writerow(row_data)
+    elif user_input == "5":
+      print("Closing App...")
+      exit()
+
+add_first_movie()
+main_menu()
