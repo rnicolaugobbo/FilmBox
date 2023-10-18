@@ -65,23 +65,24 @@ while is_active:
   add_movie_and_rating()
   print("Movie added to your list!")
 
-  user_input = \
-    input("Now that you have movie(s) in your list, you can: type \"1\" to see your list, type \"2\" to add another movie, type \"3\" to clear your list, \
-type \"4\" to export your list as a CSV file or type \"5\" to leave the app")
+  while True:
+    user_input = \
+      input("Now that you have movie(s) in your list, you can: type \"1\" to see your list, type \"2\" to add another movie, type \"3\" to clear your list, \
+  type \"4\" to export your list as a CSV file or type \"5\" to leave the app")
   
-  if user_input == "1":
-    show_list()
-  elif user_input == "2":
-    add_movie_and_rating()
-    print("Movie added to your list!")
-  elif user_input == "3":
-    clear_list()
-  elif user_input == "4":
-    fields = ["Film", "Rating", "Comment"]
+    if user_input == "1":
+      show_list()
+    elif user_input == "2":
+      add_movie_and_rating()
+      print("Movie added to your list!")
+    elif user_input == "3":
+      clear_list()
+    elif user_input == "4":
+      ields = ["Film", "Rating", "Comment"]
 
-    with open("films_rating_and_comments.csv", "w") as films_csv:
-      doc_writer = csv.DictWriter(films_csv, fieldnames=fields)
-      doc_writer.writeheader()
+      with open("films_rating_and_comments.csv", "w") as films_csv:
+        doc_writer = csv.DictWriter(films_csv, fieldnames=fields)
+        doc_writer.writeheader()
 
-      for item in movies_and_ratings:
-        doc_writer.writerow(item)
+        for item in movies_and_ratings:
+          doc_writer.writerow(item)
