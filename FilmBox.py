@@ -28,11 +28,13 @@ def add_comment(movie_name):
   movies_and_ratings[movie_name]["comment"] = user_input_comment
 
 def add_movie_and_rating():
-  user_input_movie = input("Please type the name of a movie: ")
-  if user_input_movie not in movies_and_ratings:
-    movies_and_ratings[user_input_movie] = {}
-  else:
-    print("Movie is already on your list!")
+  while True:
+    user_input_movie = input("Please type the name of a movie: ")
+    if user_input_movie not in movies_and_ratings:
+      break
+    else:
+      print("Movie is already on your list!")
+  movies_and_ratings[user_input_movie] = {}
   user_input_rating = input("Please give {} a rating from 1 to 5 stars: ".format(user_input_movie))
   while user_input_rating not in ["1", "2", "3", "4", "5"]:
     user_input_rating = input("Please type a number from 1 to 5: ")
