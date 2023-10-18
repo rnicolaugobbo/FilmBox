@@ -135,6 +135,21 @@ def add_first_movie():
     add_movie_and_rating()
     print("Movie added to your list!")
 
+def search_movies():
+  search_query = input("Enter a movie name or part of it to search: ").lower()
+  found_movies = {title: details for title, details in movies_and_ratings.items() if search_query in title.lower()}
+
+  if not found_movies:
+    print("No movies found matching your search.")
+  else:
+    print("Found movies:")
+    print("-" * 20)
+    for movie_name, details in found_movies.items():
+      print("Title:", movie_name)
+      print("Rating:", "★", int(details["rating"]))
+      print("Cooment:", details.get("comment", "No comment provided."))
+      print("-" * 20)
+
 def main_menu():
   global is_new_user
   while True:
@@ -148,7 +163,7 @@ def main_menu():
       continue
     user_input = \
               input("Now that you have movie(s) in your list, you can: type \"1\" to see your list, type \"2\" to add another movie, type \"3\" to clear your list, \
-type \"4\" to export your list as a CSV file or type \"5\" to leave the app: ")
+type \"4\" to export your list as a CSV file or type \"5\" to search for a movie or type \"6\"to leave the app: ")
     
     if user_input == "1":
       show_list()
@@ -169,6 +184,8 @@ type \"4\" to export your list as a CSV file or type \"5\" to leave the app: ")
           doc_writer.writerow(row_data)
         print("Exporing your list as a CSV file...")
     elif user_input == "5":
+      search_movies()
+    elif user_input == "6":
       conn.close()
       print("Closing App...")
       exit()
